@@ -1,0 +1,193 @@
+type WorkflowState = 
+ variant {
+   accepted;
+   inProgress;
+   rejected;
+   submitted;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = record {name: text;};
+type Time = int;
+type TeamRole = 
+ variant {
+   responsible;
+   workingOn;
+ };
+type TeamAssignment = 
+ record {
+   memberName: text;
+   role: TeamRole;
+ };
+type ShareableLink = 
+ record {
+   createdAt: Time;
+   projectId: text;
+ };
+type RSVP = 
+ record {
+   attending: bool;
+   inviteCode: text;
+   name: text;
+   timestamp: Time;
+ };
+type Project = 
+ record {
+   blockchainId: text;
+   clientId: text;
+   description: text;
+   discord: text;
+   documentPaths: vec text;
+   documentation: text;
+   github: text;
+   googleDocLinks: vec text;
+   grantProgramIds: vec text;
+   logoPath: text;
+   name: text;
+   pitchDeck: text;
+   projectType: text;
+   teamAssignments: vec TeamAssignment;
+   telegram: text;
+   twitter: text;
+   videoDemo: text;
+   website: text;
+   workflowState: WorkflowState;
+ };
+type InviteCode = 
+ record {
+   code: text;
+   created: Time;
+   used: bool;
+ };
+type GrantProgram = 
+ record {
+   applicationRequirements: text;
+   blockchainId: text;
+   contactInfo: text;
+   deadline: text;
+   description: text;
+   eligibilityCriteria: text;
+   grantAmount: text;
+   name: text;
+   processDetails: text;
+ };
+type FileReference = 
+ record {
+   hash: text;
+   path: text;
+ };
+type Client = 
+ record {
+   company: text;
+   contactInfo: text;
+   linkedin: text;
+   logoPath: text;
+   name: text;
+   twitter: text;
+   website: text;
+ };
+type Blockchain = 
+ record {
+   description: text;
+   discord: text;
+   documentation: text;
+   github: text;
+   logoPath: text;
+   name: text;
+   telegram: text;
+   twitter: text;
+   website: text;
+ };
+service : {
+  addBlockchain: (id: text, blockchain: Blockchain) -> ();
+  addClient: (id: text, client: Client) -> ();
+  addGrantProgram: (id: text, grantProgram: GrantProgram) -> ();
+  addProject: (id: text, project: Project) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  deleteBlockchain: (id: text) -> ();
+  deleteClient: (id: text) -> ();
+  deleteGrantProgram: (id: text) -> ();
+  deleteProject: (id: text) -> ();
+  deleteShareableLink: (linkId: text) -> ();
+  dropFileReference: (path: text) -> ();
+  generateInviteCode: () -> (text);
+  generateShareableLink: (projectId: text) -> (text);
+  getAllBlockchains: () -> (vec record {
+                                  text;
+                                  Blockchain;
+                                }) query;
+  getAllClients: () -> (vec record {
+                              text;
+                              Client;
+                            }) query;
+  getAllGrantPrograms: () -> (vec record {
+                                    text;
+                                    GrantProgram;
+                                  }) query;
+  getAllProjects: () -> (vec record {
+                               text;
+                               Project;
+                             }) query;
+  getAllRSVPs: () -> (vec RSVP) query;
+  getAllShareableLinks: () -> (vec record {
+                                     text;
+                                     ShareableLink;
+                                   }) query;
+  getBlockchain: (id: text) -> (opt Blockchain) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getClient: (id: text) -> (opt Client) query;
+  getClientsByGrantProgram: (grantProgramId: text) ->
+   (vec record {
+          text;
+          Client;
+        }) query;
+  getFileReference: (path: text) -> (FileReference) query;
+  getFilteredProjects: (projectType: opt text, blockchainId: opt text,
+   clientId: opt text, workflowState: opt WorkflowState, teamMember:
+   opt text) -> (vec record {
+                       text;
+                       Project;
+                     }) query;
+  getGrantProgram: (id: text) -> (opt GrantProgram) query;
+  getGrantProgramsByBlockchain: (blockchainId: text) ->
+   (vec record {
+          text;
+          GrantProgram;
+        }) query;
+  getInviteCodes: () -> (vec InviteCode) query;
+  getProject: (id: text) -> (opt Project) query;
+  getProjectTeamAssignments: (id: text) -> (vec TeamAssignment) query;
+  getProjectsByGrantProgram: (grantProgramId: text) ->
+   (vec record {
+          text;
+          Project;
+        }) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  initializeAccessControl: () -> ();
+  isCallerAdmin: () -> (bool) query;
+  linkGrantProgramToProject: (projectId: text, grantProgramId: text) -> ();
+  listFileReferences: () -> (vec FileReference) query;
+  registerFileReference: (path: text, hash: text) -> ();
+  resolveSharedProjectLink: (linkId: text) ->
+   (variant {
+      invalidLink;
+      projectNotFound;
+      success: Project;
+    }) query;
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  submitRSVP: (name: text, attending: bool, inviteCode: text) -> ();
+  unlinkGrantProgramFromProject: (projectId: text, grantProgramId: text) ->
+   ();
+  updateBlockchain: (id: text, updatedBlockchain: Blockchain) -> ();
+  updateClient: (id: text, updatedClient: Client) -> ();
+  updateGrantProgram: (id: text, updatedGrantProgram: GrantProgram) -> ();
+  updateProject: (id: text, updatedProject: Project) -> ();
+  updateProjectTeamAssignments: (id: text, teamAssignments:
+   vec TeamAssignment) -> ();
+  updateProjectWorkflow: (id: text, newState: WorkflowState) -> ();
+}

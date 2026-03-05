@@ -1,0 +1,556 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 98% 0.01 252;
+    --foreground: 20% 0.02 252;
+    --card: 100% 0 0;
+    --card-foreground: 20% 0.02 252;
+    --popover: 100% 0 0;
+    --popover-foreground: 20% 0.02 252;
+    --primary: 60% 0.15 252;
+    --primary-foreground: 98% 0.01 252;
+    --secondary: 96% 0.02 252;
+    --secondary-foreground: 20% 0.02 252;
+    --muted: 96% 0.02 252;
+    --muted-foreground: 45% 0.02 252;
+    --accent: 96% 0.02 252;
+    --accent-foreground: 20% 0.02 252;
+    --destructive: 65% 0.15 15;
+    --destructive-foreground: 98% 0.01 252;
+    --border: 92% 0.02 252;
+    --input: 92% 0.02 252;
+    --ring: 60% 0.15 252;
+    --chart-1: 65% 0.15 252;
+    --chart-2: 70% 0.12 180;
+    --chart-3: 75% 0.10 120;
+    --chart-4: 80% 0.08 60;
+    --chart-5: 85% 0.06 30;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 15% 0.02 252;
+    --foreground: 95% 0.01 252;
+    --card: 18% 0.02 252;
+    --card-foreground: 95% 0.01 252;
+    --popover: 18% 0.02 252;
+    --popover-foreground: 95% 0.01 252;
+    --primary: 70% 0.15 252;
+    --primary-foreground: 15% 0.02 252;
+    --secondary: 25% 0.02 252;
+    --secondary-foreground: 95% 0.01 252;
+    --muted: 25% 0.02 252;
+    --muted-foreground: 65% 0.02 252;
+    --accent: 25% 0.02 252;
+    --accent-foreground: 95% 0.01 252;
+    --destructive: 65% 0.15 15;
+    --destructive-foreground: 95% 0.01 252;
+    --border: 25% 0.02 252;
+    --input: 25% 0.02 252;
+    --ring: 70% 0.15 252;
+    --chart-1: 70% 0.15 252;
+    --chart-2: 75% 0.12 180;
+    --chart-3: 80% 0.10 120;
+    --chart-4: 85% 0.08 60;
+    --chart-5: 90% 0.06 30;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Enhanced scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(var(--border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(var(--muted-foreground) / 0.5);
+}
+
+/* Loading animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Enhanced focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+  @apply ring-2 ring-ring border-ring outline-none;
+}
+
+/* Professional status badges */
+.status-badge {
+  @apply px-3 py-1.5 rounded-full text-sm font-semibold border;
+}
+
+.status-in-progress {
+  @apply bg-amber-50 text-amber-800 border-amber-200;
+}
+
+.status-submitted {
+  @apply bg-blue-50 text-blue-800 border-blue-200;
+}
+
+.status-accepted {
+  @apply bg-emerald-50 text-emerald-800 border-emerald-200;
+}
+
+.status-rejected {
+  @apply bg-red-50 text-red-800 border-red-200;
+}
+
+/* Enhanced Kanban column styles */
+.kanban-column {
+  @apply rounded-xl border-2 p-6 shadow-sm;
+}
+
+.kanban-in-progress {
+  @apply bg-gradient-to-br from-amber-50 to-yellow-50 border-amber-200;
+}
+
+.kanban-submitted {
+  @apply bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200;
+}
+
+.kanban-accepted {
+  @apply bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200;
+}
+
+.kanban-rejected {
+  @apply bg-gradient-to-br from-red-50 to-rose-50 border-red-200;
+}
+
+/* Enhanced project card styles */
+.project-card {
+  @apply bg-card rounded-xl p-6 shadow-sm border border-border transition-all duration-200;
+}
+
+.project-card:hover {
+  @apply shadow-md border-primary/20;
+}
+
+/* Professional empty state styles */
+.empty-state {
+  @apply text-center py-16;
+}
+
+.empty-state-icon {
+  @apply h-16 w-16 text-muted-foreground mx-auto mb-4;
+}
+
+.empty-state-title {
+  @apply text-xl font-semibold text-foreground mb-2;
+}
+
+.empty-state-description {
+  @apply text-muted-foreground mb-6 text-lg;
+}
+
+/* Enhanced form styles */
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-semibold text-foreground;
+}
+
+.form-input {
+  @apply w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background transition-colors;
+}
+
+.form-textarea {
+  @apply w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background transition-colors;
+}
+
+.form-select {
+  @apply w-full px-4 py-3 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-background transition-colors;
+}
+
+/* Enhanced error states */
+.error-message {
+  @apply text-destructive text-sm font-medium;
+}
+
+.error-border {
+  @apply border-destructive focus:border-destructive focus:ring-destructive;
+}
+
+/* Enhanced success states */
+.success-message {
+  @apply text-emerald-600 text-sm font-medium;
+}
+
+.success-border {
+  @apply border-emerald-300 focus:border-emerald-500 focus:ring-emerald-500;
+}
+
+/* Professional loading states */
+.loading-spinner {
+  @apply animate-spin rounded-full border-b-2;
+}
+
+.loading-overlay {
+  @apply absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center rounded-lg;
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    @apply hidden;
+  }
+  
+  .main-content {
+    @apply ml-0;
+  }
+  
+  .kanban-board {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+  
+  .project-card {
+    @apply p-4;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    @apply hidden;
+  }
+  
+  .print-only {
+    @apply block;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .card {
+    @apply border-2 border-foreground;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin {
+    animation: none;
+  }
+  
+  .transition-colors,
+  .transition-shadow,
+  .transition-all {
+    transition: none;
+  }
+}
+
+/* Professional gradient backgrounds */
+.gradient-bg-primary {
+  @apply bg-gradient-to-br from-blue-50 to-indigo-100;
+}
+
+.gradient-bg-secondary {
+  @apply bg-gradient-to-br from-gray-50 to-gray-100;
+}
+
+.gradient-bg-success {
+  @apply bg-gradient-to-br from-emerald-50 to-green-100;
+}
+
+.gradient-bg-warning {
+  @apply bg-gradient-to-br from-amber-50 to-yellow-100;
+}
+
+.gradient-bg-danger {
+  @apply bg-gradient-to-br from-red-50 to-rose-100;
+}
+
+/* Enhanced card hover effects */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Professional button styles */
+.btn-primary {
+  @apply bg-primary text-primary-foreground hover:bg-primary/90 font-semibold px-6 py-3 rounded-lg transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 font-semibold px-6 py-3 rounded-lg transition-colors;
+}
+
+/* Enhanced typography for better readability */
+.heading-1 {
+  @apply text-4xl font-bold text-foreground leading-tight mb-4;
+}
+
+.heading-2 {
+  @apply text-3xl font-bold text-foreground leading-tight mb-4;
+}
+
+.heading-3 {
+  @apply text-2xl font-semibold text-foreground leading-tight mb-3;
+}
+
+.heading-4 {
+  @apply text-xl font-semibold text-foreground leading-tight mb-3;
+}
+
+.heading-5 {
+  @apply text-lg font-semibold text-foreground leading-tight mb-2;
+}
+
+.body-large {
+  @apply text-lg text-muted-foreground leading-relaxed mb-4;
+}
+
+.body-medium {
+  @apply text-base text-muted-foreground leading-relaxed mb-3;
+}
+
+.body-small {
+  @apply text-sm text-muted-foreground leading-relaxed mb-2;
+}
+
+/* Professional spacing utilities for better layout */
+.section-padding {
+  @apply py-16 px-8;
+}
+
+.container-padding {
+  @apply px-6 md:px-8 lg:px-12;
+}
+
+.content-spacing {
+  @apply space-y-6;
+}
+
+.tight-spacing {
+  @apply space-y-3;
+}
+
+.loose-spacing {
+  @apply space-y-8;
+}
+
+/* Enhanced footer styles */
+.page-container {
+  @apply min-h-screen flex flex-col bg-gray-50;
+}
+
+.main-content {
+  @apply flex-1;
+}
+
+.page-footer {
+  @apply mt-auto py-8 text-center text-sm text-muted-foreground border-t border-border bg-white;
+}
+
+.footer-heart {
+  @apply text-red-500 mx-1;
+}
+
+/* Professional dialog and modal styles */
+.dialog-overlay {
+  @apply bg-black/50 backdrop-blur-sm;
+}
+
+.dialog-content {
+  @apply bg-white rounded-xl shadow-2xl border border-border;
+}
+
+/* Enhanced table styles */
+.table-professional {
+  @apply w-full border-collapse bg-white rounded-lg overflow-hidden shadow-sm;
+}
+
+.table-professional th {
+  @apply bg-gray-50 px-6 py-4 text-left text-sm font-semibold text-gray-900 border-b border-gray-200;
+}
+
+.table-professional td {
+  @apply px-6 py-4 text-sm text-gray-600 border-b border-gray-100;
+}
+
+.table-professional tr:hover {
+  @apply bg-gray-50;
+}
+
+/* Professional badge styles */
+.badge-primary {
+  @apply bg-blue-100 text-blue-800 border border-blue-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-success {
+  @apply bg-emerald-100 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-warning {
+  @apply bg-amber-100 text-amber-800 border border-amber-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.badge-danger {
+  @apply bg-red-100 text-red-800 border border-red-200 px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+/* Enhanced input focus rings */
+.focus-ring {
+  @apply focus:ring-2 focus:ring-primary/20 focus:border-primary;
+}
+
+/* Professional shadow utilities */
+.shadow-soft {
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.1), 0 4px 16px -4px rgba(0, 0, 0, 0.06);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.12), 0 8px 32px -8px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-strong {
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.16), 0 16px 64px -16px rgba(0, 0, 0, 0.12);
+}
+
+/* Enhanced section styling for better visual hierarchy */
+.section-header {
+  @apply border-b border-gray-200 pb-4 mb-6;
+}
+
+.section-title {
+  @apply text-2xl font-bold text-gray-900 mb-2;
+}
+
+.section-subtitle {
+  @apply text-gray-600 text-lg;
+}
+
+.subsection-title {
+  @apply text-lg font-semibold text-gray-900 mb-3;
+}
+
+.subsection-subtitle {
+  @apply text-sm text-gray-600 mb-4;
+}
+
+/* Card content spacing improvements */
+.card-content-spacing > * + * {
+  @apply mt-4;
+}
+
+.card-tight-spacing > * + * {
+  @apply mt-2;
+}
+
+.card-loose-spacing > * + * {
+  @apply mt-6;
+}
+
+/* Team member styling improvements */
+.team-member-card {
+  @apply bg-white rounded-xl p-4 border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md;
+}
+
+.team-member-responsible {
+  @apply bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200;
+}
+
+.team-member-working {
+  @apply bg-blue-50 border border-blue-200;
+}
+
+/* Project logo styling */
+.project-logo {
+  @apply w-12 h-12 object-cover rounded-lg border border-gray-200 shadow-sm;
+}
+
+.project-logo-large {
+  @apply w-16 h-16 object-cover rounded-xl border-2 border-gray-200 shadow-sm;
+}
+
+.project-logo-xl {
+  @apply w-20 h-20 object-cover rounded-xl border-2 border-gray-200 shadow-sm;
+}
+
+/* Fallback logo styling */
+.logo-fallback {
+  @apply bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-sm;
+}
+
+.logo-fallback-large {
+  @apply bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm;
+}
+
+/* Link styling improvements */
+.external-link {
+  @apply text-blue-600 hover:text-blue-700 transition-colors underline decoration-1 underline-offset-2;
+}
+
+.social-link {
+  @apply flex items-center space-x-2 p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors;
+}
+
+/* Status indicator improvements */
+.status-indicator {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border;
+}
+
+/* Document item styling */
+.document-item {
+  @apply flex items-center justify-between bg-blue-50 border border-blue-200 px-4 py-3 rounded-lg;
+}
+
+.google-doc-item {
+  @apply flex items-center justify-between bg-green-50 border border-green-200 px-4 py-3 rounded-lg;
+}
+
+/* Grant program styling */
+.grant-program-card {
+  @apply bg-green-50 border border-green-200 rounded-xl p-5;
+}
+
+.grant-program-badge {
+  @apply text-green-700 border-green-300 bg-green-100;
+}
